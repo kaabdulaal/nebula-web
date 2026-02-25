@@ -5,6 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://nebula-storage.vercel.app"),
   title: "Nebula | Zero-Knowledge Cloud Storage on Telegram",
   description: "Secure standalone vault leveraging Telegram's secure infrastructure. Private encrypted file storage with unlimited capacity and C++ performance.",
   keywords: ["zero-knowledge", "cloud storage", "Telegram file storage", "encrypted vault", "C++ backend", "privacy", "Nebula"],
@@ -30,6 +31,9 @@ export const metadata: Metadata = {
     title: "Nebula | Zero-Knowledge Telegram Storage",
     description: "Secure standalone vault leveraging Telegram's secure infrastructure.",
   },
+  verification: {
+    google: '_V0xiY7q215VJ-aNt3u35Qlojc5DmeiWCImFHXxno8Y',
+  }
 };
 
 export default function RootLayout({
