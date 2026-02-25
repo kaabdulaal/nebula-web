@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://nebula-vault.vercel.app/sitemap.xml',
+    sitemap: 'https://nebula-storage.vercel.app/sitemap.xml',
   }
 }
