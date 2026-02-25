@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Nebula - Encrypted Telegram Cloud Storage",
     description: "Transform your Telegram into a private, zero-knowledge vault. Military-grade encryption, infinite storage.",
-    url: "https://nebula-vault.vercel.app", 
+    url: "https://nebula-storage.vercel.app", 
     siteName: "Nebula",
     images: [
       {
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nebula | Zero-Knowledge Telegram Vault",
+    title: "Nebula | Zero-Knowledge Telegram Storage",
     description: "Secure standalone vault leveraging Telegram's secure infrastructure.",
   },
 };
