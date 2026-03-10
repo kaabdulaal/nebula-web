@@ -13,14 +13,14 @@ const PLATFORMS = {
         label: "Linux",
         icon: SiLinux,
         formats: [
-            { label: ".AppImage", href: "https://github.com/kaabdulaal/nebula-client/releases/latest/download/Nebula-Linux-x86_64.AppImage" },
-            { label: ".deb", href: "https://github.com/kaabdulaal/nebula-client/releases/latest/download/Nebula-Linux-x86_64.deb" },
+            { label: ".AppImage", href: "https://github.com/kaabdulaal/nebula-client/releases/download/v0.1.0-alpha/Nebula-Linux-x86_64.AppImage" },
+            { label: ".deb", href: "https://github.com/kaabdulaal/nebula-client/releases/download/v0.1.0-alpha/Nebula-Linux-x86_64.deb" },
         ],
     },
     windows: {
         label: "Windows",
         icon: Monitor,
-        formats: [{ label: ".exe", href: "https://github.com/kaabdulaal/nebula-client/releases/latest/download/Nebula-Windows-x86_64.exe" }],
+        formats: [{ label: ".exe", href: "https://github.com/kaabdulaal/nebula-client/releases/download/v0.1.0-alpha/Nebula-Windows-x86_64.exe" }],
     },
     android: {
         label: "Android",

@@ -2,8 +2,8 @@
 
 export const dynamic = "force-dynamic";
 
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { OrbitingCircles } from "@/components/ui/orbiting-circles";
 import { PlatformDownloadButton } from "@/components/PlatformDownloadButton";
 import { trackExternalLink } from "@/lib/analytics";
@@ -18,6 +18,8 @@ import {
   Lock,
   Mail,
   Monitor,
+  Maximize2,
+  X,
 } from "lucide-react";
 import {
   SiCplusplus,
@@ -80,24 +82,63 @@ const PLATFORM_CARDS = [
     name: "Linux",
     formats: ".AppImage / .deb",
     status: "Available",
+    image: "/screenshots/linux.png",
   },
   {
     icon: SiAndroid,
     name: "Android",
     formats: ".apk",
     status: "Available",
+    image: "/screenshots/android.png",
   },
   {
     icon: Monitor,
     name: "Windows",
     formats: ".exe",
     status: "Available",
+    image: "/screenshots/windows.png",
   },
 ];
 
 export default function NebulaHome() {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
   return (
     <main className="min-h-screen w-full bg-[#030408] selection:bg-purple-500/30">
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedImage(null)}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-xl cursor-zoom-out"
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              className="relative max-h-[90vh] max-w-7xl overflow-hidden rounded-2xl border border-white/10"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={selectedImage}
+                alt="Full Screenshot"
+                className="h-auto w-full object-contain shadow-2xl"
+              />
+              <button
+                onClick={() => setSelectedImage(null)}
+                className="absolute top-4 right-4 rounded-full bg-black/50 p-2 text-white/70 backdrop-blur-md transition-colors hover:bg-white/10 hover:text-white"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      { }
+      { }
       { }
       <section
         id="hero"
@@ -168,12 +209,12 @@ export default function NebulaHome() {
         </div>
 
         { }
-        <div className="z-20 flex flex-col items-center text-center max-w-xl w-full pt-10 sm:pt-0">
+        <div className="z-20 flex flex-col items-center text-center max-w-3xl w-full pt-20 sm:pt-0">
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
-            className="mb-2 sm:mb-4 font-mono text-[8px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-neutral-500"
+            className="mb-4 font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-neutral-500 px-6"
           >
             Open Source · Cross-Platform · Paranoid Security
           </motion.p>
@@ -182,12 +223,12 @@ export default function NebulaHome() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="mb-4 sm:mb-6 text-3xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl"
+            className="mb-6 px-4 text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl"
           >
             Your Data,
             <br />
             <span className="bg-gradient-to-r from-white via-purple-200 to-purple-400 bg-clip-text text-transparent">
-              Secured within Telegram Cloud.
+              Secured in the Cloud.
             </span>
           </motion.h1>
 
@@ -195,7 +236,7 @@ export default function NebulaHome() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="mb-6 sm:mb-10 max-w-lg text-xs leading-relaxed text-neutral-400 sm:text-sm"
+            className="mb-10 max-w-2xl px-8 text-sm leading-relaxed text-neutral-400 sm:text-base lg:text-lg"
           >
             A high-performance storage and data management engine built on TDLib. Securely sync, encrypt, and manage your files and information across devices using Telegram’s infrastructure as a backbone.
           </motion.p>
@@ -204,6 +245,7 @@ export default function NebulaHome() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.35 }}
+            className="w-full px-4"
           >
             <PlatformDownloadButton />
           </motion.div>
@@ -299,25 +341,60 @@ export default function NebulaHome() {
           </p>
         </FadeIn>
 
-        <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-3">
+        <div className="grid gap-6 grid-cols-1 lg:grid-cols-3">
           {PLATFORM_CARDS.map((p, i) => {
             const Icon = p.icon;
             return (
               <FadeIn key={p.name} delay={i * 0.12}>
-                <div className="group flex flex-col items-center rounded-xl sm:rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-8 text-center backdrop-blur-3xl transition-all hover:border-white/20 hover:bg-white/[0.05]">
-                  <div className="mb-3 sm:mb-4 inline-flex rounded-lg sm:rounded-xl border border-white/10 bg-white/5 p-3 sm:p-4">
-                    <Icon className="h-6 w-6 sm:h-8 sm:w-8 text-neutral-300 group-hover:text-white transition-colors" />
+                <div className="group relative flex flex-col items-center rounded-2xl border border-white/10 bg-white/[0.03] p-6 text-center backdrop-blur-3xl transition-all hover:border-white/20 hover:bg-white/[0.05]">
+                  <div className="mb-4 inline-flex rounded-xl border border-white/10 bg-white/5 p-4 transition-transform group-hover:scale-110">
+                    <Icon className="h-8 w-8 text-neutral-300 group-hover:text-white transition-colors" />
                   </div>
-                  <h3 className="mb-1 text-sm sm:text-lg font-bold text-white">
+                  <h3 className="mb-1 text-lg font-bold text-white">
                     {p.name}
                   </h3>
-                  <p className="mb-3 sm:mb-4 font-mono text-[9px] sm:text-[10px] uppercase tracking-widest text-neutral-500">
+                  <p className="mb-6 font-mono text-[10px] uppercase tracking-widest text-neutral-500">
                     {p.formats}
                   </p>
-                  <div className="mt-1 sm:mt-2 flex h-24 sm:h-32 w-full items-center justify-center rounded-lg sm:rounded-xl border border-dashed border-white/10 bg-white/[0.02]">
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-600">
-                      Screenshot coming soon
-                    </span>
+
+                  { }
+                  <div
+                    onClick={() => setSelectedImage(p.image)}
+                    className="group/img relative aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/[0.02] shadow-2xl cursor-zoom-in"
+                  >
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.6, ease: [0.33, 1, 0.68, 1] }}
+                      className="h-full w-full"
+                    >
+                      <img
+                        src={p.image}
+                        alt={`${p.name} Screenshot`}
+                        className="h-full w-full object-cover object-top opacity-60 transition-all duration-500 group-hover/img:opacity-100 group-hover/img:scale-110"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).parentElement?.classList.add("placeholder-active");
+                          (e.target as HTMLImageElement).style.display = "none";
+                        }}
+                      />
+                    </motion.div>
+
+                    { }
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover/img:opacity-100 flex items-center justify-center">
+                      <div className="flex flex-col items-center gap-2 translate-y-4 transition-transform duration-300 group-hover/img:translate-y-0">
+                        <div className="rounded-full bg-white/10 p-3 backdrop-blur-md border border-white/20">
+                          <Maximize2 className="h-5 w-5 text-white" />
+                        </div>
+                        <span className="text-[10px] font-mono uppercase tracking-widest text-white/70">
+                          Expand View
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="hidden absolute inset-0 items-center justify-center [.placeholder-active_&]:flex">
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-600">
+                        Coming Soon
+                      </span>
+                    </div>
                   </div>
                 </div>
               </FadeIn>
